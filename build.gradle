@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.9-SNAPSHOT'
+    id 'fabric-loom' version '1.10-SNAPSHOT'
 }
 
 version = '1.0.7'
@@ -10,20 +10,29 @@ base {
 }
 
 repositories {
-    maven { url = 'https://maven.fabricmc.net/' }
+    maven {
+        url = 'https://maven.fabricmc.net/'
+    }
     mavenCentral()
 }
 
 dependencies {
+    // Minecraft
     minecraft "com.mojang:minecraft:1.21.11"
-    mappings loom.officialMojangMappings()
+
+    // Yarn mappings (recommended for Fabric mods)
+    mappings "net.fabricmc:yarn:1.21.11+build.1:v2"
+
+    // Loader
     modImplementation "net.fabricmc:fabric-loader:0.18.0"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.141.1+1.21.11"
+
+    // Fabric API
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.141.4+1.21.11"
 }
 
 processResources {
     inputs.property "version", project.version
-    filteringCharset "UTF-8"
+
     filesMatching("fabric.mod.json") {
         expand "version": project.version
     }
@@ -32,6 +41,11 @@ processResources {
 java {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+    options.release = 21
 }
 
 jar {
