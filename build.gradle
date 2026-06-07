@@ -14,9 +14,17 @@ repositories {
     mavenCentral()
 }
 
+loom {
+    mods {
+        "inventory-layout" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:1.21.11"
-    mappings loom.officialMojangMappings()
+    mappings "net.fabricmc:yarn:1.21.11+build.3:v2"
     modImplementation "net.fabricmc:fabric-loader:0.18.1"
     modImplementation "net.fabricmc.fabric-api:fabric-api:0.141.1+1.21.11"
 }
@@ -30,4 +38,12 @@ processResources {
 }
 
 java {
-    sourceCompatibility = JavaVersion.V
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.base.archivesName.get()}" }
+    }
+}
