@@ -18,30 +18,14 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.8'
+
       - name: Fix folder structure
         run: |
           mkdir -p src/main/java/com/codex/inventorylayout
           mkdir -p src/main/resources/assets/inventory-layout/lang
           mkdir -p gradle/wrapper
-          mv InventoryLayoutClient.java src/main/java/com/codex/inventorylayout/ 2>/dev/null || true
-          mv LayoutScreen.java src/main/java/com/codex/inventorylayout/ 2>/dev/null || true
-          mv fabric.mod.json src/main/resources/ 2>/dev/null || true
-          mv en_us.json src/main/resources/assets/inventory-layout/lang/ 2>/dev/null || true
-          mv gradle-wrapper.properties gradle/wrapper/ 2>/dev/null || true
-
-      - name: Download Gradle Wrapper JAR
-        run: |
-          mkdir -p gradle/wrapper
-          curl -L "https://github.com/gradle/gradle/raw/v8.8.0/gradle/wrapper/gradle-wrapper.jar" -o gradle/wrapper/gradle-wrapper.jar
-
-      - name: Grant Gradle permission
-        run: chmod +x gradlew
-
-      - name: Build JAR
-        run: ./gradlew build --stacktrace
-
-      - name: Upload JAR
-        uses: actions/upload-artifact@v4
-        with:
-          name: PYES-Inventory-Layout-JAR
-          path: build/libs/PYES-Inventory-Layout-*.jar
+          mv InventoryLayoutClient.java src/main/jav
