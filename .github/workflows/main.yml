@@ -22,9 +22,9 @@ jobs:
           mv fabric.mod.json src/main/resources/ 2>/dev/null || true
           mv en_us.json src/main/resources/assets/inventory-layout/lang/ 2>/dev/null || true
           mv gradle-wrapper.properties gradle/wrapper/ 2>/dev/null || true
-          wget -q https://services.gradle.org/distributions/gradle-8.8-bin.zip -O gradle.zip
+          wget -q https://services.gradle.org/distributions/gradle-8.11-bin.zip -O gradle.zip
           unzip -q gradle.zip
-          ./gradle-8.8/bin/gradle build --no-daemon
+          ./gradle-8.11/bin/gradle build --no-daemon
       - uses: actions/upload-artifact@v4
         with:
           name: PYES-Inventory-Layout-JAR
