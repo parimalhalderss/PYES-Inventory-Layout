@@ -1,0 +1,24 @@
+{
+	"schemaVersion": 1,
+	"id": "inventory-layout",
+	"version": "1.0.7",
+	"name": "PYES Inventory Layout",
+	"description": "Save, select, and apply PvP kits with a Feather Client style GUI. Press O to open.",
+	"authors": [
+		"PYES"
+	],
+	"contact": {},
+	"license": "MIT",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"com.codex.inventorylayout.InventoryLayoutClient"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.18.0",
+		"minecraft": ">=1.21.11",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
