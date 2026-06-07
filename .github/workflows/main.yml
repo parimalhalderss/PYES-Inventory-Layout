@@ -10,22 +10,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Setup Java 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v3
         with:
           java-version: '21'
           distribution: 'temurin'
+
+      - name: Fix folder structure
+        run: |
+          mkdir -p src/main/java/com/codex/inventorylayout
+          mkdir -p src/main/resources/assets/inventory-layout/lang
+          mkdir -p gradle/wrapper
+          mv InventoryLayoutClient.java src/main/java/com/codex/inventorylayout/ 2>/dev/null || true
+          mv LayoutScreen.java src/main/java/com/codex/inventorylayout/ 2>/dev/null || true
+          mv fabric.mod.json src/main/resources/ 2>/dev/null || true
+          mv en_us.json src/main/resources/assets/inventory-layout/lang/ 2>/dev/null || true
+          mv gradle-wrapper.properties gradle/wrapper/ 2>/dev/null || true
 
       - name: Grant Gradle permission
         run: chmod +x gradlew
 
       - name: Build JAR
-        run: ./gradlew build
+        run: ./gradlew build --stacktrace
 
       - name: Upload JAR
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: PYES-Inventory-Layout-JAR
           path: build/libs/PYES-Inventory-Layout-*.jar
