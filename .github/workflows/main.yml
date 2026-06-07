@@ -1,31 +1,31 @@
 name: Build Mod JAR
-
 on:
   push:
     branches: [ main ]
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Java 21
-        uses: actions/setup-java@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
-        with:
-          gradle-version: '8.8'
-
-      - name: Fix folder structure
+      - name: Prepare and Build
         run: |
           mkdir -p src/main/java/com/codex/inventorylayout
           mkdir -p src/main/resources/assets/inventory-layout/lang
           mkdir -p gradle/wrapper
-          mv InventoryLayoutClient.java src/main/jav
+          mv InventoryLayoutClient.java src/main/java/com/codex/inventorylayout/ 2>/dev/null || true
+          mv LayoutScreen.java src/main/java/com/codex/inventorylayout/ 2>/dev/null || true
+          mv fabric.mod.json src/main/resources/ 2>/dev/null || true
+          mv en_us.json src/main/resources/assets/inventory-layout/lang/ 2>/dev/null || true
+          mv gradle-wrapper.properties gradle/wrapper/ 2>/dev/null || true
+          wget -q https://services.gradle.org/distributions/gradle-8.8-bin.zip -O gradle.zip
+          unzip -q gradle.zip
+          ./gradle-8.8/bin/gradle build --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PYES-Inventory-Layout-JAR
+          path: build/libs/*.jar
